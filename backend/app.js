@@ -6,6 +6,8 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+const users = [];
+
 app.post('/signup', (req, res) => {
     const { email, password, confirmPassword } = req.body;
 
@@ -17,12 +19,33 @@ app.post('/signup', (req, res) => {
         return res.status(400).json({ message: 'Passwords do not match' });
     }
 
-    // Hashing passwords and saving to the database should be done here.
-    // For example, using bcrypt:
-    // const hashedPassword = await bcrypt.hash(password, 10);
+    if (users.some(user => user.email === email)) {
+        return res.status(400).json({ message: 'Email is already registered' });
+    }
 
+    const newUser = {
+        email,
+        password
+    }
+
+    users.push(newUser);
+    console.log(users);
     res.status(200).json({ message: 'Signup successful', email });
 });
+
+app.post('/login',(req,res) => {
+    const {email,password} = req.body;
+    console.log(email);
+
+    const user = users.find(user => user.email === email);
+
+    if (!user || user.password !== password) {
+        return res.status(401).json({ message: 'Invalid email or password' });
+    }
+    
+    res.status(200).json({ message: 'Login successful', email });
+
+})
 
 app.listen(4000, () => {
     console.log('Server is running on port 4000');
