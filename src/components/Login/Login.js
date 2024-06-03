@@ -16,12 +16,14 @@ const Login = () => {
         const password = passwordRef.current.value;
 
         try {
-            const response = await axios.post('http://localhost:4000/login', { email, password});
-            console.log(response);
-            setError(null);
-            history.replace('/Home');
-            emailRef.current.value = '';
-            passwordRef.current.value = '';
+            const response = await axios.post('http://localhost:4000/auth/login', { email, password});
+            if(response.status === 200){
+                setError(null);
+                history.replace('/Home');
+                emailRef.current.value = '';
+                passwordRef.current.value = '';
+            }
+            
         } catch (error) {
             setError(error.response?.data?.message || 'Something went wrong');
         }

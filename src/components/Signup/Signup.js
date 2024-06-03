@@ -23,7 +23,7 @@ const Signup = () => {
         }
 
         try {
-            await axios.post('http://localhost:4000/signup', { email, password, confirmPassword });
+            await axios.post('http://localhost:4000/auth/signup', { email, password, confirmPassword });
             history.replace('/login');
             setError(null);
             emailRef.current.value = '';
