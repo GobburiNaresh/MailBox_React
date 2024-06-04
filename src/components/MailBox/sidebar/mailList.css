@@ -1,0 +1,37 @@
+.mail {
+    margin-left: 5rem;
+    background-color:white;
+}
+
+.mail :hover{
+  cursor: pointer;
+}
+.mail li{
+    text-decoration: none;
+}
+.email-list {
+    list-style-type: none;
+    padding: 0px;
+}
+
+.checkbox {
+    width: 100%;
+}
+
+.individual_email {
+    padding: 1.2rem;
+}
+
+.individual_email:hover {
+    animation: zoomIn 0.3s ease forwards;
+  }
+  
+  @keyframes zoomIn {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.05);
+    }
+  }
+  

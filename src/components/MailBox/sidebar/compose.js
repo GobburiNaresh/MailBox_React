@@ -1,10 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef} from 'react';
 import { Modal, Form, Button } from 'react-bootstrap';
 import { EditorState, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import draftToHtml from 'draftjs-to-html';
 import axios from 'axios';
+import './Compose.css';
 
 const Compose = ({ show, handleClose }) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -36,7 +37,6 @@ const Compose = ({ show, handleClose }) => {
 
     }
   }
-
   return (
     <Modal show={show} onHide={handleClose} dialogClassName="modal-bottom-right">
       <Modal.Header closeButton>
