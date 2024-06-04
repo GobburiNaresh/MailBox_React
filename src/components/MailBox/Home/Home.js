@@ -11,7 +11,7 @@ const Home = () => {
       <Navbar bg="primary" variant="dark">
         <Container>
           <Navbar.Brand>
-            <Link to="/Home" className="text-white text-decoration-none">Welcome to your mail box</Link>
+            <Link to="/Home" className="text-white text-decoration-none">ConnectMail</Link>
           </Navbar.Brand>
         </Container>
       </Navbar>
