@@ -9,6 +9,7 @@ const MailList = () => {
     const [mails, setMails] = useState([]);
     const [showMailDetails, setShowMailDetails] = useState(false);
     const [selectedMail, setSelectedMail] = useState(null);
+    const [checkedMails, setCheckedMails] = useState({});
 
     const userEmail = useSelector((state) => state.email.user_email);
 
@@ -36,46 +37,61 @@ const MailList = () => {
                     mailId: mail.id,
                     readStatus: true,
                 });
-                if(response.status === 200){
+                if (response.status === 200) {
                     setMails((prevMails) =>
                         prevMails.map((m) =>
                             m.id === mail.id ? { ...m, read: true } : m
                         )
-                    );    
+                    );
                 }
-                
             } catch (error) {
                 console.error('Error marking email as read:', error);
             }
         }
     };
 
+    const handleCheckboxChange = (mailId) => {
+        setCheckedMails((prevCheckedMails) => ({
+            ...prevCheckedMails,
+            [mailId]: !prevCheckedMails[mailId],
+        }));
+    };
+
     return (
         <div className='mail'>
             {showMailDetails && <MailDetailsForm mail={selectedMail} onClose={() => setShowMailDetails(false)} />}
-            {!showMailDetails && 
-            <Form>
-                <ul className='email-list'>
-                <Navbar bg="light" variant="black">
-                    <Container>
-                    <Navbar.Brand>All Mails</Navbar.Brand>
-                    </Container>
-                </Navbar>
-                    {mails.map(mail => (
-                        <li key={mail.id} onClick={() => handleFormClick(mail)}>
-                            <Card className='individual_email'>
-                                {!mail.read && <div className='blueDot'></div>}
-                                <Form.Check
-                                    type="checkbox"
-                                    label={mail.userEmail}
-                                    className='checkbox'
-                                />
-                            </Card>
-                        </li>
-                    ))}
-                </ul>
-            </Form>
-        }
+            {!showMailDetails &&
+                <Card className='around'>
+                    <Form>
+                        <ul className='email-list'>
+                            <Navbar bg="light" variant="black">
+                                <Container>
+                                    <Navbar.Brand>All Mails</Navbar.Brand>
+                                </Container>
+                            </Navbar>
+                            {mails.map(mail => (
+                                <li key={mail.id}>
+                                    <Card className='individual_email'>
+                                        <Form.Check
+                                            type="checkbox"
+                                            checked={!!checkedMails[mail.id]}
+                                            onChange={(e) => {
+                                                e.stopPropagation();
+                                                handleCheckboxChange(mail.id);
+                                            }}
+                                            className='checkbox'
+                                        />
+                                        <div className='email-content-left' onClick={() => handleFormClick(mail)}>
+                                            <span>{mail.userEmail}</span>
+                                            {!mail.read && <div className='blueDot '></div>}
+                                        </div>
+                                    </Card>
+                                </li>
+                            ))}
+                        </ul>
+                    </Form>
+                </Card>
+            }
         </div>
     );
 }

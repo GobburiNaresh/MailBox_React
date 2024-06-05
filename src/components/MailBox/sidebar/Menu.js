@@ -15,7 +15,7 @@ const Menu = () => {
     <div>
       <Nav defaultActiveKey="/inbox" className="flex-column sidebar">
         <Nav.Link onClick={handleComposeShow}>
-          <FaPencilAlt />
+          <FaPencilAlt/>
           <span className="nav-text">Compose</span>
         </Nav.Link>
         <Nav.Link as={Link} to="/inbox">
