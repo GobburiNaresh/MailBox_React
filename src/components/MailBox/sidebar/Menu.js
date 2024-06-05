@@ -1,19 +1,19 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { FaPencilAlt } from "react-icons/fa";
 import { MdInbox, MdDrafts } from "react-icons/md";
 import { IoMdSend } from "react-icons/io";
 import Compose from './Compose';
+import './Menu.css';
 
 const Menu = () => {
-  const [showCompose, setShowCompose] = React.useState(false);
+  const [showCompose, setShowCompose] = useState(false);
   const handleComposeClose = () => setShowCompose(false);
   const handleComposeShow = () => setShowCompose(true);
-
   return (
-    <div className="sidebar">
-      <Nav defaultActiveKey="/inbox" className="flex-column">
+    <div>
+      <Nav defaultActiveKey="/inbox" className="flex-column sidebar">
         <Nav.Link onClick={handleComposeShow}>
           <FaPencilAlt />
           <span className="nav-text">Compose</span>

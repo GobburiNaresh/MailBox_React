@@ -33,8 +33,8 @@ export const login = async (req, res) => {
         if (!user || user.password !== password) {
             return res.status(401).json({ message: 'Invalid email or password' });
         }
-
-        res.status(200).json({ message: 'Login successful', email: user.email });
+        console.log(user.email_id);
+        res.status(200).json({ message: 'Login successful', user: user });
     } catch (error) {
         res.status(500).json({ message: 'Server error', error });
     }

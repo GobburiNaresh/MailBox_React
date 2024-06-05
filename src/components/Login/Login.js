@@ -1,29 +1,33 @@
 import React, { useRef, useState } from 'react';
 import { Form, Button, Card, Alert } from 'react-bootstrap';
 import axios from 'axios';
-import {Link,useHistory} from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import  { userAction } from '../../Redux/UserSlice';
 
 const Login = () => {
     const emailRef = useRef();
     const passwordRef = useRef();
-    const [error,setError] = useState(null);
-
+    const [error, setError] = useState(null);
+    const dispatch = useDispatch();
     const history = useHistory();
-    
+
     const LoginHandler = async (event) => {
         event.preventDefault();
         const email = emailRef.current.value;
         const password = passwordRef.current.value;
 
         try {
-            const response = await axios.post('http://localhost:4000/auth/login', { email, password});
-            if(response.status === 200){
+            const response = await axios.post('http://localhost:4000/auth/login', { email, password });
+            if (response.status === 200) {
+                const user_id = response.data.user.email_id;
+                const user_email = response.data.user.email;
                 setError(null);
-                history.replace('/Home');
+                dispatch(userAction.login({ user_id,user_email}));
+                history.replace('/inbox');
                 emailRef.current.value = '';
                 passwordRef.current.value = '';
             }
-            
         } catch (error) {
             setError(error.response?.data?.message || 'Something went wrong');
         }
@@ -59,10 +63,10 @@ const Login = () => {
                         </Button>
                     </div>
                     <div className="text-center">
-                    <Form.Text>
-                        <Link to="/password">Forgot password</Link>
-                    </Form.Text>
-                </div>
+                        <Form.Text>
+                            <Link to="/password">Forgot password</Link>
+                        </Form.Text>
+                    </div>
                 </Form>
                 <div className="text-center">
                     <Form.Text>

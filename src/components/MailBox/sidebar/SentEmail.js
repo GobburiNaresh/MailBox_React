@@ -10,13 +10,13 @@ const MailList = () => {
     const [showMailDetails, setShowMailDetails] = useState(false);
     const [selectedMail, setSelectedMail] = useState(null);
 
-    const userEmail = useSelector((state) => state.email.user_email);
-
+    const userId = useSelector((state) => state.email.user_id);
+    
     useEffect(() => {
         const fetchMails = async () => {
             try {
-                const response = await axios.get('http://localhost:4000/mail/getMail', {
-                    params: { userEmail } 
+                const response = await axios.get('http://localhost:4000/mail/sentMail', {
+                    params: { userId } 
                 });
                 setMails(response.data.data);
             } catch (error) {
@@ -25,29 +25,11 @@ const MailList = () => {
         };
 
         fetchMails();
-    }, [userEmail]);
+    }, [userId]);
 
-    const handleFormClick = async (mail) => {
+    const handleFormClick = (mail) => {
         setSelectedMail(mail);
         setShowMailDetails(true);
-        if (!mail.read) {
-            try {
-                const response = await axios.post('http://localhost:4000/mail/markAsRead', {
-                    mailId: mail.id,
-                    readStatus: true,
-                });
-                if(response.status === 200){
-                    setMails((prevMails) =>
-                        prevMails.map((m) =>
-                            m.id === mail.id ? { ...m, read: true } : m
-                        )
-                    );    
-                }
-                
-            } catch (error) {
-                console.error('Error marking email as read:', error);
-            }
-        }
     };
 
     return (
@@ -64,10 +46,9 @@ const MailList = () => {
                     {mails.map(mail => (
                         <li key={mail.id} onClick={() => handleFormClick(mail)}>
                             <Card className='individual_email'>
-                                {!mail.read && <div className='blueDot'></div>}
                                 <Form.Check
                                     type="checkbox"
-                                    label={mail.userEmail}
+                                    label={mail.recipientEmail}
                                     className='checkbox'
                                 />
                             </Card>

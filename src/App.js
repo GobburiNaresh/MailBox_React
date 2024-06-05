@@ -5,6 +5,9 @@ import Signup from './components/Signup/Signup';
 import Login from './components/Login/Login';
 import ForgotPassword from './components/ForgotPassword/password';
 import Home from './components/MailBox/Home/Home';
+import SentEmail from './components/MailBox/sidebar/SentEmail';
+import Menu from './components/MailBox/sidebar/Menu';
+import MailList from './components/MailBox/sidebar/MailList';
 
 function App() {
   return (
@@ -20,8 +23,15 @@ function App() {
           <Route exact path='/password'>
             <ForgotPassword/>
           </Route>
-          <Route exact path='/Home'>
+          <Route exact path='/inbox'>
             <Home/>
+            <MailList/>
+            <Menu/>
+          </Route>
+          <Route exact path='/sent'>
+            <Home/>
+            <SentEmail/>
+            <Menu/>
           </Route>
         </Switch>
       </Router>
