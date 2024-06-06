@@ -4,7 +4,7 @@ import './mailList.css';
 import { Form, Card, Container, Navbar } from 'react-bootstrap';
 import MailDetailsForm from './MailDetailForm';
 import { useSelector } from 'react-redux';
-import { MdDelete } from "react-icons/md";
+import DeleteMail from './DeleteMail'; // Ensure correct import
 
 const MailList = () => {
     const [mails, setMails] = useState([]);
@@ -18,7 +18,7 @@ const MailList = () => {
         const fetchMails = async () => {
             try {
                 const response = await axios.get('http://localhost:4000/mail/getMail', {
-                    params: { userEmail } 
+                    params: { userEmail }
                 });
                 setMails(response.data.data);
             } catch (error) {
@@ -58,17 +58,8 @@ const MailList = () => {
         }));
     };
 
-    const deleteEmailHandler = async (deleteId) => {
-        try {
-            const response = await axios.delete(`http://localhost:4000/mail/deleteEmail/${deleteId}`);
-            if (response.status === 200) {
-                setMails((prevMails) => prevMails.filter(mail => mail.id !== deleteId));
-            } else {
-                console.error('Failed to delete email:', response.data.message);
-            }
-        } catch (error) {
-            console.error('Error deleting email:', error);
-        }
+    const handleDeleteMail = (deleteId) => {
+        setMails((prevMails) => prevMails.filter(mail => mail.id !== deleteId));
     };
 
     return (
@@ -99,12 +90,7 @@ const MailList = () => {
                                             <span>{mail.userEmail}</span>
                                             {!mail.read && <div className='blueDot'></div>}
                                         </div>
-                                        <div className='deleteEmail'>
-                                            <MdDelete onClick={(e) => {
-                                                e.stopPropagation();
-                                                deleteEmailHandler(mail.id);
-                                            }} />
-                                        </div>
+                                        <DeleteMail mailId={mail.id} onDelete={handleDeleteMail} />
                                     </Card>
                                 </li>
                             ))}

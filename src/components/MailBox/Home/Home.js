@@ -1,14 +1,23 @@
 import React from 'react';
-import { Container, Navbar, Nav} from 'react-bootstrap';
+import { Container, Navbar, Nav } from 'react-bootstrap';
 import { FaUserCircle } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import Logout from './Logout';
+import { userAction } from '../../../Redux/UserSlice';
 import './Home.css';
-import { useSelector } from 'react-redux';
-
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const userEmail = useSelector((state) => state.email.user_email);
   const userName = userEmail.split('@')[0];
+
+  const logoutHandler = () => {
+    dispatch(userAction.logout());
+    history.replace('/');
+  };
+
   return (
     <div>
       <Navbar bg="primary" variant="dark">
@@ -18,10 +27,13 @@ const Home = () => {
           </Navbar.Brand>
           <Navbar.Collapse className="justify-content-end">
             <Nav>
-              <Nav.Link href="#" className="text-white d-flex align-items-center">
+              <div className="text-white d-flex align-items-center" style={{ textDecoration: 'none' }}>
                 <FaUserCircle size={24} className="me-2" />
                 <span>{userName}</span>
-              </Nav.Link>
+              </div>
+              <div className="text-white d-flex align-items-center mx-3" style={{ textDecoration: 'none' }}>
+                <Logout onClick={logoutHandler} />
+              </div>
             </Nav>
           </Navbar.Collapse>
         </Container>

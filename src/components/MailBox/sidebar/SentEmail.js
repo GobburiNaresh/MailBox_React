@@ -4,6 +4,7 @@ import './mailList.css';
 import { Form, Card, Container, Navbar } from 'react-bootstrap';
 import MailDetailsForm from './MailDetailForm';
 import { useSelector } from 'react-redux';
+import DeleteMail from './DeleteMail';
 
 const MailList = () => {
     const [mails, setMails] = useState([]);
@@ -19,6 +20,7 @@ const MailList = () => {
                     params: { userId } 
                 });
                 setMails(response.data.data);
+                console.log(response.data);
             } catch (error) {
                 console.error('Error fetching emails:', error);
             }
@@ -30,6 +32,9 @@ const MailList = () => {
     const handleFormClick = (mail) => {
         setSelectedMail(mail);
         setShowMailDetails(true);
+    };
+    const handleDeleteMail = (deleteId) => {
+        setMails((prevMails) => prevMails.filter(mail => mail.id !== deleteId));
     };
 
     return (
@@ -51,6 +56,7 @@ const MailList = () => {
                                     label={mail.recipientEmail}
                                     className='checkbox'
                                 />
+                                 <DeleteMail mailId={mail.id} onDelete={handleDeleteMail} />
                             </Card>
                         </li>
                     ))}

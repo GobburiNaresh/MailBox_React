@@ -11,7 +11,7 @@
   }
   .sidebar .nav-link {
     display: flex;
-    padding: 15px 25px;
+    padding: 15px 10px;
     font-size: 18px;
     color: #333;
     transition: background-color 0.3s, padding-left 0.3s;
