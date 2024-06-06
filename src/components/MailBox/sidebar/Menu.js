@@ -25,17 +25,17 @@ const Menu = () => {
         console.error('Error fetching unread count:', error);
       }
     };
-
     fetchData();
+    const countInterval = setInterval(fetchData, 2000);
+
+    return () => clearInterval(countInterval);
   }, [userEmail]);
 
-  const handleComposeClose = () => setShowCompose(false);
-  const handleComposeShow = () => setShowCompose(true);
-
+  
   return (
     <div>
       <Nav defaultActiveKey="/inbox" className="flex-column sidebar">
-        <Nav.Link as={Link} to="/compose" onClick={handleComposeShow}>
+        <Nav.Link as={Link} to="/compose">
           <FaPencilAlt />
           <span className="nav-text">Compose</span>
         </Nav.Link>

@@ -25,8 +25,9 @@ const MailList = () => {
         console.error("Error fetching emails:", error);
       }
     };
-
     fetchMails();
+    const intervalId = setInterval(fetchMails, 1000);
+    return () => clearInterval(intervalId);
   }, [userEmail]);
 
   const handleFormClick = async (mail) => {
