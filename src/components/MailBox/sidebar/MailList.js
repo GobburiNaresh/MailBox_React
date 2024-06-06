@@ -4,6 +4,7 @@ import './mailList.css';
 import { Form, Card, Container, Navbar } from 'react-bootstrap';
 import MailDetailsForm from './MailDetailForm';
 import { useSelector } from 'react-redux';
+import { MdDelete } from "react-icons/md";
 
 const MailList = () => {
     const [mails, setMails] = useState([]);
@@ -57,6 +58,19 @@ const MailList = () => {
         }));
     };
 
+    const deleteEmailHandler = async (deleteId) => {
+        try {
+            const response = await axios.delete(`http://localhost:4000/mail/deleteEmail/${deleteId}`);
+            if (response.status === 200) {
+                setMails((prevMails) => prevMails.filter(mail => mail.id !== deleteId));
+            } else {
+                console.error('Failed to delete email:', response.data.message);
+            }
+        } catch (error) {
+            console.error('Error deleting email:', error);
+        }
+    };
+
     return (
         <div className='mail'>
             {showMailDetails && <MailDetailsForm mail={selectedMail} onClose={() => setShowMailDetails(false)} />}
@@ -83,7 +97,13 @@ const MailList = () => {
                                         />
                                         <div className='email-content-left' onClick={() => handleFormClick(mail)}>
                                             <span>{mail.userEmail}</span>
-                                            {!mail.read && <div className='blueDot '></div>}
+                                            {!mail.read && <div className='blueDot'></div>}
+                                        </div>
+                                        <div className='deleteEmail'>
+                                            <MdDelete onClick={(e) => {
+                                                e.stopPropagation();
+                                                deleteEmailHandler(mail.id);
+                                            }} />
                                         </div>
                                     </Card>
                                 </li>
@@ -94,6 +114,6 @@ const MailList = () => {
             }
         </div>
     );
-}
+};
 
 export default MailList;

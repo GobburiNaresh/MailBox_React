@@ -41,7 +41,7 @@ const Menu = () => {
         </Nav.Link>
         <Nav.Link as={Link} to="/inbox">
           <MdInbox />
-          <span className="nav-text">Inbox ({countUnreadMessage})</span>
+          <span className="nav-text">Inbox ({countUnreadMessage} unread)</span>
         </Nav.Link>
         <Nav.Link as={Link} to="/sent">
           <IoMdSend />
