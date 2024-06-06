@@ -8,6 +8,7 @@ import Home from './components/MailBox/Home/Home';
 import SentEmail from './components/MailBox/sidebar/SentEmail';
 import Menu from './components/MailBox/sidebar/Menu';
 import MailList from './components/MailBox/sidebar/MailList';
+import Compose from './components/MailBox/sidebar/Compose';
 
 function App() {
   return (
@@ -22,6 +23,11 @@ function App() {
           </Route>
           <Route exact path='/password'>
             <ForgotPassword/>
+          </Route>
+          <Route exact path='/compose'>
+            <Home/>
+            <Compose/>
+            <Menu/>
           </Route>
           <Route exact path='/inbox'>
             <Home/>

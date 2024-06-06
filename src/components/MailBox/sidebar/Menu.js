@@ -35,7 +35,7 @@ const Menu = () => {
   return (
     <div>
       <Nav defaultActiveKey="/inbox" className="flex-column sidebar">
-        <Nav.Link onClick={handleComposeShow}>
+        <Nav.Link as={Link} to="/compose" onClick={handleComposeShow}>
           <FaPencilAlt />
           <span className="nav-text">Compose</span>
         </Nav.Link>
@@ -52,8 +52,6 @@ const Menu = () => {
           <span className="nav-text">Drafts</span>
         </Nav.Link>
       </Nav>
-
-      <Compose show={showCompose} handleClose={handleComposeClose} />
     </div>
   );
 }
