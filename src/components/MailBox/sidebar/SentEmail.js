@@ -19,8 +19,8 @@ const MailList = () => {
                 const response = await axios.get('http://localhost:4000/mail/sentMail', {
                     params: { userId } 
                 });
+                console.log(response.data.data);
                 setMails(response.data.data);
-                console.log(response.data);
             } catch (error) {
                 console.error('Error fetching emails:', error);
             }
